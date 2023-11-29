@@ -2,6 +2,12 @@
 Get your hard drive's info secretly once you plug the hard drive into your device. 
 ```
 New disk detected: [E:]
+Access: 0
+VolumeName: MyUSB
+Description: Removable Disk
+FileSystem: FAT32
+Size: 27162968064
+FreeSpace: 22106865664
 Saved disk info: [E:]
 ```
 MyUSB_1701074487.json
