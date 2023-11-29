@@ -33,7 +33,7 @@ def list_files(startpath):
 
 def save_disk_info(added_disk):
     try:
-        print(f'New disk detected: [{getattr(added_disk, "Caption", None)}]')
+        print(f'\033[0mNew disk detected: \033[1;32m[{getattr(added_disk, "Caption", None)}]')
         
         info = {
             "Access": getattr(added_disk, "Access", None), 
@@ -45,11 +45,16 @@ def save_disk_info(added_disk):
             "Files": list_files(getattr(added_disk, "Caption", None))
         }
 
+        for i in info:
+            if not i in ["Files"]:
+                print(f"\033[0m{i}: \033[1;32m{info[i]}")
+
         with open(os.path.join(save_path, f"{added_disk.VolumeName}_{int(time.time())}.json"), "w") as f:
             json.dump(info, f, ensure_ascii=True, indent=4)
-            print(f'Saved disk info: [{getattr(added_disk, "Caption", None)}]')
+            print(f'\033[0mSaved disk info: \033[1;32m[{getattr(added_disk, "Caption", None)}]')
     except Exception as err:
         print(err)
+    print()
 
 c = wmi.WMI()
 
@@ -62,7 +67,6 @@ watcher = c.watch_for(
 while True:
     try:
         added_disk = watcher()
-        #print(added_disk)
 
         save_disk_info_thread = threading.Thread(target=save_disk_info, args=(added_disk,))
         save_disk_info_thread.start()
